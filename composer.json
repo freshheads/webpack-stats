@@ -1,0 +1,17 @@
+{
+  "name": "freshheads/webpack-stats",
+  "type": "library",
+  "description": "A PHP library to read the Webpack statistics file.",
+  "require": {
+    "php": ">=5.5.9"
+  },
+  "autoload": {
+    "psr-4": { "FH\\WebpackStats\\": "src/" }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-develop": "0.x-dev"
+    }
+  }
+}
+

@@ -14,5 +14,8 @@ class StatsTest extends \PHPUnit_Framework_TestCase
 
         $stats = new Stats(['hash' => '5d187f7672826911f3ed']);
         $this->assertFalse($stats->hasAssetsByChunkName());
+
+        $stats = new Stats(['hash' => '5d187f7672826911f3ed', 'assetsByChunkName' => null]);
+        $this->assertFalse($stats->hasAssetsByChunkName());
     }
 }

@@ -15,6 +15,11 @@
     "email": "info@freshheads.com",
     "issues": "https://github.com/freshheads/webpack-stats/issues"
   },
+  "config": {
+    "platform": {
+      "php": "5.5.9"
+    }
+  },
   "require": {
     "php": ">=5.5.9"
   },

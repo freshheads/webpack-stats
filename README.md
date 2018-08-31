@@ -24,4 +24,4 @@ the [FHWebpackBundle](https://github.com/freshheads/FHWebpackBundle).
 Requirements
 ------------
 
-This library works with PHP 5.5.9 or up.
+This library works with PHP 5.6.0 and up.

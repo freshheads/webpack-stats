@@ -50,4 +50,25 @@ class Stats
             isset($this->stats['assetsByChunkName'])
             && (is_string($this->stats['assetsByChunkName']) || is_array($this->stats['assetsByChunkName']));
     }
+
+    /**
+     * @return Assets
+     * @throws PropertyNotFoundException
+     */
+    public function getAssets()
+    {
+        if (!$this->hasAssets()) {
+            throw PropertyNotFoundException::create('assets');
+        }
+
+        return new Assets($this->stats['assets']);
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasAssets()
+    {
+        return isset($this->stats['assets']) && is_array($this->stats['assets']);
+    }
 }

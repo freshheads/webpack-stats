@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Freshheads Webpack stats library.
  *
@@ -11,49 +13,54 @@
 
 namespace FH\WebpackStats;
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * @author Joris van de Sande <joris.van.de.sande@freshheads.com>
  */
-final class AssetsTest extends \PHPUnit_Framework_TestCase
+final class AssetsTest extends TestCase
 {
-    private $assets = [
+    /**
+     * @var array<int, array<string, mixed>>
+     */
+    private array $assets = [
         [
-            "name" => "vendors-bootstrapPlugins.29f80f81df1977385c82.vendors-bootstrapPlugins.js",
-            "size" => 28052,
-            "chunks" => [
-                "vendors-bootstrapPlugins"
+            'name' => 'vendors-bootstrapPlugins.29f80f81df1977385c82.vendors-bootstrapPlugins.js',
+            'size' => 28052,
+            'chunks' => [
+                'vendors-bootstrapPlugins',
             ],
-            "chunkNames" => [
-                "vendors-bootstrapPlugins"
-            ]
+            'chunkNames' => [
+                'vendors-bootstrapPlugins',
+            ],
         ],
         [
-            "name" => "7b9776076d5fceef4993b55c9383dedd.gif",
-            "size" => 1849,
-            "chunks" => [],
-            "chunkNames" => []
+            'name' => '7b9776076d5fceef4993b55c9383dedd.gif',
+            'size' => 1849,
+            'chunks' => [],
+            'chunkNames' => [],
         ],
         [
-            "name" => "49e3f006018662f60f1db2aec0b2cca9.png",
-            "size" => 845,
-            "chunks" => [],
-            "chunkNames" => []
-        ]
+            'name' => '49e3f006018662f60f1db2aec0b2cca9.png',
+            'size' => 845,
+            'chunks' => [],
+            'chunkNames' => [],
+        ],
     ];
 
-    public function testAssetsCanBeCreatedFromArray()
+    public function testAssetsCanBeCreatedFromArray(): void
     {
         $assets = new Assets($this->assets);
 
-        $this->assertCount(count($this->assets), $assets);
+        $this->assertCount(\count($this->assets), $assets);
     }
 
-    public function testMalformedAssetsAreSkipped()
+    public function testMalformedAssetsAreSkipped(): void
     {
         $malformedAssets = [
             [
-                'nameXXX' => 'test.jpg'
-            ]
+                'nameXXX' => 'test.jpg',
+            ],
         ];
         $assets = new Assets($malformedAssets);
 

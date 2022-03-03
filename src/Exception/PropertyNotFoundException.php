@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Freshheads Webpack stats library.
  *
@@ -11,13 +13,15 @@
 
 namespace FH\WebpackStats\Exception;
 
+use OutOfRangeException;
+
 /**
  * @author Joris van de Sande <joris.van.de.sande@freshheads.com>
  */
-class PropertyNotFoundException extends \OutOfRangeException implements Exception
+class PropertyNotFoundException extends OutOfRangeException implements Exception
 {
-    public static function create($propertyName)
+    public static function create(string $propertyName): self
     {
-        return new self('No stats property found with name: ' . $propertyName);
+        return new self(sprintf('No stats property found with name: %s', $propertyName));
     }
 }

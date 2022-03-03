@@ -1,2 +1,7 @@
 /.idea
+/.tools/*/vendor
+/.tools/*/composer.lock
+/.php_cs.cache
+/.phpunit.result.cache
+/composer.lock
 /vendor

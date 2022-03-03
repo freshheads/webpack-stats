@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Freshheads Webpack stats library.
  *
@@ -11,13 +13,15 @@
 
 namespace FH\WebpackStats\Exception;
 
+use OutOfRangeException;
+
 /**
  * @author Joris van de Sande <joris.van.de.sande@freshheads.com>
  */
-class ChunkNotFoundException extends \OutOfRangeException implements Exception
+class ChunkNotFoundException extends OutOfRangeException implements Exception
 {
-    public static function create($chunkName)
+    public static function create(string $chunkName): self
     {
-        return new self('No chunk found with name: ' . $chunkName);
+        return new self(sprintf('No chunk found with name: %s', $chunkName));
     }
 }

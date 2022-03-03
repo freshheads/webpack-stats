@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Freshheads Webpack stats library.
  *
@@ -19,20 +21,22 @@ use FH\WebpackStats\Exception\PropertyNotFoundException;
 class Stats
 {
     /**
-     * @var array
+     * @var array<string, mixed>
      */
-    private $stats;
+    private array $stats;
 
+    /**
+     * @param array<string, mixed> $stats
+     */
     public function __construct(array $stats)
     {
         $this->stats = $stats;
     }
 
     /**
-     * @return AssetsByChunkName
      * @throws PropertyNotFoundException
      */
-    public function getAssetsByChunkName()
+    public function getAssetsByChunkName(): AssetsByChunkName
     {
         if (!$this->hasAssetsByChunkName()) {
             throw PropertyNotFoundException::create('assetsByChunkName');
@@ -41,34 +45,30 @@ class Stats
         return new AssetsByChunkName((array) $this->stats['assetsByChunkName']);
     }
 
-    /**
-     * @return bool
-     */
-    public function hasAssetsByChunkName()
+    public function hasAssetsByChunkName(): bool
     {
         return
             isset($this->stats['assetsByChunkName'])
-            && (is_string($this->stats['assetsByChunkName']) || is_array($this->stats['assetsByChunkName']));
+            && (\is_string($this->stats['assetsByChunkName']) || \is_array($this->stats['assetsByChunkName']));
     }
 
     /**
-     * @return Assets
      * @throws PropertyNotFoundException
      */
-    public function getAssets()
+    public function getAssets(): Assets
     {
         if (!$this->hasAssets()) {
             throw PropertyNotFoundException::create('assets');
         }
 
-        return new Assets($this->stats['assets']);
+        /** @var array<int, array<string, mixed>> $assets */
+        $assets = $this->stats['assets'];
+
+        return new Assets($assets);
     }
 
-    /**
-     * @return bool
-     */
-    public function hasAssets()
+    public function hasAssets(): bool
     {
-        return isset($this->stats['assets']) && is_array($this->stats['assets']);
+        return isset($this->stats['assets']) && \is_array($this->stats['assets']);
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Freshheads Webpack stats library.
  *
@@ -20,10 +22,7 @@ use FH\WebpackStats\Stats;
 interface Parser
 {
     /**
-     * @param string $json stats object in JSON format
-     * @return Stats
-     *
      * @throws ParseException
      */
-    public function parse($json);
+    public function parse(string $json): Stats;
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Freshheads Webpack stats library.
  *
@@ -12,13 +14,14 @@
 namespace FH\WebpackStats;
 
 use FH\WebpackStats\Exception\PropertyNotFoundException;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author Joris van de Sande <joris.van.de.sande@freshheads.com>
  */
-final class StatsTest extends \PHPUnit_Framework_TestCase
+final class StatsTest extends TestCase
 {
-    public function testHasAssetsByChunkName()
+    public function testHasAssetsByChunkName(): void
     {
         $stats = new Stats(['assetsByChunkName' => ['app' => 'app.js']]);
         $this->assertTrue($stats->hasAssetsByChunkName());
@@ -30,18 +33,18 @@ final class StatsTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($stats->hasAssetsByChunkName());
     }
 
-    public function testHasAssets()
+    public function testHasAssets(): void
     {
         $stats = new Stats([
             'assets' => [
                 [
-                    "name" => "image1.jpg"
+                    'name' => 'image1.jpg',
                 ],
                 [
-                    "name" => "image2.jpg",
-                    "size" => 28052
-                ]
-            ]
+                    'name' => 'image2.jpg',
+                    'size' => 28052,
+                ],
+            ],
         ]);
         $this->assertTrue($stats->hasAssets());
 
@@ -52,23 +55,19 @@ final class StatsTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($stats->hasAssets());
     }
 
-    /**
-     * @expectedException FH\WebpackStats\Exception\PropertyNotFoundException
-     */
-    public function testGetAssetsThrowsExceptionIfNoAssetsAreDefined()
+    public function testGetAssetsThrowsExceptionIfNoAssetsAreDefined(): void
     {
-        $stats = new Stats([]);
+        $this->expectException(PropertyNotFoundException::class);
 
+        $stats = new Stats([]);
         $stats->getAssets();
     }
 
-    /**
-     * @expectedException FH\WebpackStats\Exception\PropertyNotFoundException
-     */
-    public function testGetAssetsByChunkNameThrowsExceptionIfNoAssetsByChunkNameAreDefined()
+    public function testGetAssetsByChunkNameThrowsExceptionIfNoAssetsByChunkNameAreDefined(): void
     {
-        $stats = new Stats([]);
+        $this->expectException(PropertyNotFoundException::class);
 
+        $stats = new Stats([]);
         $stats->getAssetsByChunkName();
     }
 }

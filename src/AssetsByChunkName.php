@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Freshheads Webpack stats library.
  *
@@ -19,10 +21,13 @@ use FH\WebpackStats\Exception\ChunkNotFoundException;
 class AssetsByChunkName
 {
     /**
-     * @var array
+     * @var array<string, mixed>
      */
-    private $assetsByChunkName;
+    private array $assetsByChunkName;
 
+    /**
+     * @param array<string, mixed> $assetsByChunkName
+     */
     public function __construct(array $assetsByChunkName)
     {
         $this->assetsByChunkName = $assetsByChunkName;
@@ -31,15 +36,18 @@ class AssetsByChunkName
     /**
      * Returns the first matching asset in the given chunk. Matches everything by default.
      *
-     * @param string $chunkName name of the chunk to look for assets.
-     * @param string $pattern regular expression that should be matched (defaults to .*)
-     * @return string|null
+     * @param string $chunkName name of the chunk to look for assets
+     * @param string $pattern   regular expression that should be matched (defaults to .*)
      *
      * @throws ChunkNotFoundException
      */
-    public function getAsset($chunkName, $pattern = '/.*/')
+    public function getAsset(string $chunkName, string $pattern = '/.*/'): ?string
     {
         foreach ($this->getAssets($chunkName) as $filename) {
+            if (!\is_string($filename)) {
+                continue;
+            }
+
             if (preg_match($pattern, $filename)) {
                 return $filename;
             }
@@ -49,12 +57,11 @@ class AssetsByChunkName
     }
 
     /**
-     * @param string $chunkName
-     * @return array list of assets for the given chunk
-     *
      * @throws ChunkNotFoundException
+     *
+     * @return array<string, mixed> list of assets for the given chunk
      */
-    public function getAssets($chunkName)
+    public function getAssets(string $chunkName): array
     {
         if (!isset($this->assetsByChunkName[$chunkName])) {
             throw ChunkNotFoundException::create($chunkName);

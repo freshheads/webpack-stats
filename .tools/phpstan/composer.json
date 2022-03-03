@@ -1,0 +1,6 @@
+{
+    "require": {
+        "phpstan/phpstan": "^1.4",
+        "phpstan/phpstan-phpunit": "^1.0"
+    }
+}

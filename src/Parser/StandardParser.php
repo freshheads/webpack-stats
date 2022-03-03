@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Freshheads Webpack stats library.
  *
@@ -19,15 +21,11 @@ use FH\WebpackStats\Stats;
  */
 class StandardParser implements Parser
 {
-    /**
-     * @param string $json stats object in JSON format
-     * @return Stats
-     */
-    public function parse($json)
+    public function parse(string $json): Stats
     {
         $stats = json_decode($json, true);
 
-        if (!is_array($stats)) {
+        if (!\is_array($stats)) {
             throw MissingStatsException::create();
         }
 

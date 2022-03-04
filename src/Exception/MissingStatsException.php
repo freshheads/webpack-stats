@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Freshheads Webpack stats library.
  *
@@ -16,7 +18,7 @@ namespace FH\WebpackStats\Exception;
  */
 class MissingStatsException extends ParseException
 {
-    public static function create()
+    public static function create(): self
     {
         return new self('Stats object is missing');
     }

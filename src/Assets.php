@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Freshheads Webpack stats library.
  *
@@ -11,41 +13,54 @@
 
 namespace FH\WebpackStats;
 
-use Traversable;
+use ArrayIterator;
+use Countable;
+use IteratorAggregate;
 
 /**
  * @author Joris van de Sande <joris.van.de.sande@freshheads.com>
+ * @implements IteratorAggregate<int, Asset>
  */
-class Assets implements \IteratorAggregate, \Countable
+class Assets implements IteratorAggregate, Countable
 {
     /**
      * @var Asset[]
      */
-    private $assets = [];
+    private array $assets = [];
 
+    /**
+     * @param array<int, array<string, mixed>> $assets
+     */
     public function __construct(array $assets)
     {
         foreach ($assets as $asset) {
-            if (!is_array($asset) || !isset($asset['name'])) {
+            if (!\is_array($asset) || !isset($asset['name'])) {
+                continue;
+            }
+
+            if (!\is_string($asset['name'])) {
                 continue;
             }
 
             $this->assets[] = new Asset(
                 $asset['name'],
-                isset($asset['size']) ? $asset['size'] : null,
-                isset($asset['chunks']) && is_array($asset['chunks']) ? $asset['chunks'] : null,
-                isset($asset['chunkNames']) && is_array($asset['chunkNames']) ? $asset['chunkNames'] : null
+                isset($asset['size']) && \is_int($asset['size']) ? $asset['size'] : null,
+                isset($asset['chunks']) && \is_array($asset['chunks']) ? $asset['chunks'] : [],
+                isset($asset['chunkNames']) && \is_array($asset['chunkNames']) ? $asset['chunkNames'] : []
             );
         }
     }
 
-    public function getIterator()
+    /**
+     * @return ArrayIterator<int, Asset>
+     */
+    public function getIterator(): ArrayIterator
     {
-        return new \ArrayIterator($this->assets);
+        return new ArrayIterator($this->assets);
     }
 
-    public function count()
+    public function count(): int
     {
-        return count($this->assets);
+        return \count($this->assets);
     }
 }

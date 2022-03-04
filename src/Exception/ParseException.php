@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Freshheads Webpack stats library.
  *
@@ -11,9 +13,11 @@
 
 namespace FH\WebpackStats\Exception;
 
+use RuntimeException;
+
 /**
  * @author Joris van de Sande <joris.van.de.sande@freshheads.com>
  */
-class ParseException extends \RuntimeException implements Exception
+class ParseException extends RuntimeException implements Exception
 {
 }

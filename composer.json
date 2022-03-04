@@ -15,23 +15,25 @@
     "email": "info@freshheads.com",
     "issues": "https://github.com/freshheads/webpack-stats/issues"
   },
-  "config": {
-    "platform": {
-      "php": "5.6.0"
-    }
-  },
-  "require": {
-    "php": ">=5.6.0"
-  },
-  "require-dev": {
-    "phpunit/phpunit": "^5.0 || ^6.0"
-  },
   "autoload": {
     "psr-4": { "FH\\WebpackStats\\": "src/" }
   },
+  "require": {
+    "php": ">=7.4",
+    "ext-json": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.5"
+  },
+  "scripts": {
+    "test": "php -d memory_limit=-1 vendor/bin/phpunit --colors=always --testdox",
+    "phpstan": "composer install --working-dir=.tools/phpstan && .tools/phpstan/vendor/bin/phpstan --memory-limit=4G analyse -c ./phpstan.neon",
+    "lint": "composer update --working-dir=.tools/php-cs-fixer && .tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --ansi --verbose --diff --dry-run",
+    "fix-php-cs": "composer update --working-dir=.tools/php-cs-fixer && .tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --ansi --verbose --diff"
+  },
   "extra": {
     "branch-alias": {
-      "dev-develop": "1.x-dev"
+      "dev-develop": "2.x-dev"
     }
   }
 }

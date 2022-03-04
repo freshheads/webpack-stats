@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Freshheads Webpack stats library.
  *
@@ -12,17 +14,17 @@
 namespace FH\WebpackStats\Parser;
 
 use FH\WebpackStats\Exception\MissingStatsException;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author Joris van de Sande <joris.van.de.sande@freshheads.com>
  */
-final class StandardParserTest extends \PHPUnit_Framework_TestCase
+final class StandardParserTest extends TestCase
 {
-    /**
-     * @expectedException FH\WebpackStats\Exception\MissingStatsException
-     */
-    public function testParserThrowsExceptionIfStatsAreMissing()
+    public function testParserThrowsExceptionIfStatsAreMissing(): void
     {
+        $this->expectException(MissingStatsException::class);
+
         $parser = new StandardParser();
         $parser->parse('');
     }

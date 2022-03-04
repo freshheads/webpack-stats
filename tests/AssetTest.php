@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Freshheads Webpack stats library.
  *
@@ -11,12 +13,14 @@
 
 namespace FH\WebpackStats;
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * @author Joris van de Sande <joris.van.de.sande@freshheads.com>
  */
-final class AssetTest extends \PHPUnit_Framework_TestCase
+final class AssetTest extends TestCase
 {
-    public function testAssetReturnsTheSameContentThatItWasCreatedWith()
+    public function testAssetReturnsTheSameContentThatItWasCreatedWith(): void
     {
         $name = 'image.jpg';
         $size = 123456;
@@ -25,9 +29,9 @@ final class AssetTest extends \PHPUnit_Framework_TestCase
 
         $asset = new Asset($name, $size, $chunks, $chunkNames);
 
-        $this->assertEquals($name, $asset->getName());
-        $this->assertEquals($size, $asset->getSize());
-        $this->assertEquals($chunks, $asset->getChunks());
-        $this->assertEquals($chunkNames, $asset->getChunkNames());
+        $this->assertSame($name, $asset->getName());
+        $this->assertSame($size, $asset->getSize());
+        $this->assertSame($chunks, $asset->getChunks());
+        $this->assertSame($chunkNames, $asset->getChunkNames());
     }
 }

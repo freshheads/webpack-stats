@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Freshheads Webpack stats library.
  *
@@ -16,33 +18,25 @@ namespace FH\WebpackStats;
  */
 class Asset
 {
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var int
-     */
-    private $size;
+    private string $name;
+    private ?int $size;
 
     /**
      * @var string[]
      */
-    private $chunks;
+    private array $chunks;
 
     /**
      * @var string[]
      */
-    private $chunkNames;
+    private array $chunkNames;
 
     /**
-     * @param string $name
-     * @param int $size
+     * @param ?int     $size
      * @param string[] $chunks
      * @param string[] $chunkNames
      */
-    public function __construct($name, $size = null, array $chunks = [], array $chunkNames = [])
+    public function __construct(string $name, ?int $size = null, array $chunks = [], array $chunkNames = [])
     {
         $this->name = $name;
         $this->size = $size;
@@ -50,18 +44,12 @@ class Asset
         $this->chunkNames = $chunkNames;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return int
-     */
-    public function getSize()
+    public function getSize(): ?int
     {
         return $this->size;
     }
@@ -69,7 +57,7 @@ class Asset
     /**
      * @return string[]
      */
-    public function getChunks()
+    public function getChunks(): array
     {
         return $this->chunks;
     }
@@ -77,13 +65,13 @@ class Asset
     /**
      * @return string[]
      */
-    public function getChunkNames()
+    public function getChunkNames(): array
     {
         return $this->chunkNames;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
-        return (string) $this->name;
+        return $this->name;
     }
 }
